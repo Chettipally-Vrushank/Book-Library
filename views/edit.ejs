@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Edit Book</title>
+  <link rel="stylesheet" href="/styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <style>
+    .form-container {
+      max-width: 600px;
+      margin: 40px auto;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      padding: 40px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .form-header h1 {
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: #2d3748;
+      margin-bottom: 10px;
+    }
+
+    .form-header p {
+      color: #718096;
+      font-size: 1.1rem;
+    }
+
+    .form-group {
+      margin-bottom: 25px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 600;
+      color: #2d3748;
+      font-size: 0.95rem;
+    }
+
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+      width: 100%;
+      padding: 15px;
+      border: 2px solid #e2e8f0;
+      border-radius: 12px;
+      font-size: 1rem;
+      font-family: inherit;
+      transition: all 0.3s ease;
+      background: #f7fafc;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus,
+    .form-group select:focus {
+      outline: none;
+      border-color: #667eea;
+      background: white;
+      box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    .rating-input {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .rating-stars {
+      display: flex;
+      gap: 8px;
+    }
+
+    .rating-stars input[type="radio"] {
+      display: none;
+    }
+
+    .rating-stars label {
+      font-size: 1.5rem;
+      color: #e2e8f0;
+      cursor: pointer;
+      transition: color 0.3s ease;
+    }
+
+    .rating-stars input[type="radio"]:checked ~ label,
+    .rating-stars label:hover,
+    .rating-stars label:hover ~ label {
+      color: #f6ad55;
+    }
+
+    .rating-number {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: #4a5568;
+    }
+
+    .submit-btn {
+      width: 100%;
+      background: linear-gradient(135deg, #4299e1 0%, #3182ce 100%);
+      color: white;
+      padding: 18px;
+      border: none;
+      border-radius: 12px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(66, 153, 225, 0.4);
+      margin-top: 20px;
+    }
+
+    .submit-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(66, 153, 225, 0.6);
+    }
+
+    .back-link {
+      text-align: center;
+      margin-top: 25px;
+    }
+
+    .back-link a {
+      color: #667eea;
+      text-decoration: none;
+      font-weight: 500;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: color 0.3s ease;
+    }
+
+    .back-link a:hover {
+      color: #5a67d8;
+    }
+
+    .cover-preview {
+      text-align: center;
+      margin: 20px 0;
+      padding: 20px;
+      background: #f7fafc;
+      border-radius: 12px;
+      border: 2px dashed #e2e8f0;
+    }
+
+    .cover-preview img {
+      max-height: 250px;
+      border-radius: 12px;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    }
+
+    .cover-preview.no-cover {
+      color: #718096;
+      font-style: italic;
+    }
+
+    @media (max-width: 768px) {
+      .form-container {
+        margin: 20px;
+        padding: 30px 25px;
+      }
+
+      .form-row {
+        grid-template-columns: 1fr;
+        gap: 15px;
+      }
+
+      .form-header h1 {
+        font-size: 1.8rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="form-container">
+      <div class="form-header">
+        <h1><i class="fas fa-edit"></i> Edit Book</h1>
+        <p>Update your book information and notes</p>
+      </div>
+
+      <form action="/edit/<%= book.id %>" method="POST">
+        <div class="form-group">
+          <label for="title">
+            <i class="fas fa-book"></i> Book Title *
+          </label>
+          <input type="text" name="title" id="title" value="<%= book.title %>" required 
+                 placeholder="Enter the book title">
+        </div>
+
+        <div class="form-group">
+          <label for="author">
+            <i class="fas fa-user"></i> Author *
+          </label>
+          <input type="text" name="author" id="author" value="<%= book.author %>" required 
+                 placeholder="Enter the author's name">
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="isbn">
+              <i class="fas fa-barcode"></i> ISBN
+            </label>
+            <input type="text" name="isbn" id="isbn" value="<%= book.isbn %>" 
+                   placeholder="Enter ISBN (optional)">
+          </div>
+
+          <div class="form-group">
+            <label for="read_date">
+              <i class="fas fa-calendar"></i> Date Read *
+            </label>
+            <input type="date" name="read_date" id="read_date" 
+                   value="<%= book.date_read ? new Date(book.date_read).toISOString().substring(0, 10) : '' %>" required>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="rating">
+            <i class="fas fa-star"></i> Rating *
+          </label>
+          <div class="rating-input">
+            <div class="rating-stars">
+              <input type="radio" name="rating" id="star5" value="5" <%= book.rating == 5 ? 'checked' : '' %> required>
+              <label for="star5">★</label>
+              <input type="radio" name="rating" id="star4" value="4" <%= book.rating == 4 ? 'checked' : '' %>>
+              <label for="star4">★</label>
+              <input type="radio" name="rating" id="star3" value="3" <%= book.rating == 3 ? 'checked' : '' %>>
+              <label for="star3">★</label>
+              <input type="radio" name="rating" id="star2" value="2" <%= book.rating == 2 ? 'checked' : '' %>>
+              <label for="star2">★</label>
+              <input type="radio" name="rating" id="star1" value="1" <%= book.rating == 1 ? 'checked' : '' %>>
+              <label for="star1">★</label>
+            </div>
+            <span class="rating-number"><%= book.rating %>/5</span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="notes">
+            <i class="fas fa-sticky-note"></i> Review & Notes
+          </label>
+          <textarea name="notes" id="notes" rows="5" 
+                    placeholder="Share your thoughts about the book, what you learned, or any memorable quotes..."><%= book.notes %></textarea>
+        </div>
+
+        <div class="cover-preview" id="cover-preview">
+          <% if (book.cover_url && !book.cover_url.includes('default-cover.svg')) { %>
+            <img src="<%= book.cover_url %>" alt="Current Book Cover">
+          <% } else { %>
+            <div class="no-cover">
+              <i class="fas fa-image" style="font-size: 2rem; margin-bottom: 10px; display: block;"></i>
+              <p>Book cover will be automatically updated based on title or ISBN</p>
+            </div>
+          <% } %>
+        </div>
+
+        <button type="submit" class="submit-btn">
+          <i class="fas fa-save"></i> Save Changes
+        </button>
+      </form>
+
+      <div class="back-link">
+        <a href="/">
+          <i class="fas fa-arrow-left"></i> Back to Library
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Rating stars interaction
+    document.querySelectorAll('.rating-stars input[type="radio"]').forEach(radio => {
+      radio.addEventListener('change', function() {
+        const ratingNumber = document.querySelector('.rating-number');
+        ratingNumber.textContent = `${this.value}/5`;
+      });
+    });
+
+    // Auto-fetch cover preview when ISBN is entered
+    document.getElementById('isbn').addEventListener('input', async function() {
+      const isbn = this.value.trim();
+      const coverPreview = document.getElementById('cover-preview');
+      
+      if (isbn) {
+        try {
+          const response = await fetch(`https://openlibrary.org/search.json?isbn=${isbn}`);
+          const data = await response.json();
+          
+          if (data.docs && data.docs.length > 0 && data.docs[0].cover_i) {
+            const coverUrl = `https://covers.openlibrary.org/b/id/${data.docs[0].cover_i}-M.jpg`;
+            coverPreview.innerHTML = `<img src="${coverUrl}" alt="Book Cover Preview" onerror="this.style.display='none'">`;
+          } else {
+            coverPreview.innerHTML = `
+              <div class="no-cover">
+                <i class="fas fa-search" style="font-size: 2rem; margin-bottom: 10px; display: block;"></i>
+                <p>No cover found for this ISBN</p>
+              </div>
+            `;
+          }
+        } catch (error) {
+          coverPreview.innerHTML = `
+            <div class="no-cover">
+              <i class="fas fa-exclamation-triangle" style="font-size: 2rem; margin-bottom: 10px; display: block;"></i>
+              <p>Error fetching cover</p>
+            </div>
+          `;
+        }
+      } else {
+        coverPreview.innerHTML = `
+          <div class="no-cover">
+            <i class="fas fa-image" style="font-size: 2rem; margin-bottom: 10px; display: block;"></i>
+            <p>Book cover will be automatically updated based on title or ISBN</p>
+          </div>
+        `;
+      }
+    });
+  </script>
+</body>
+</html>
