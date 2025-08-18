@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # 📚 Book Notes - Personal Reading Library Tracker
 
 A beautiful, modern web application for tracking your reading journey, managing book collections, and discovering new stories. Built with Node.js, Express, PostgreSQL, and a stunning responsive frontend with **user authentication and multi-user support**.
@@ -13,6 +14,17 @@ A beautiful, modern web application for tracking your reading journey, managing 
 - **Multi-User Support**: Each user has their own book collection
 - **User Profiles**: Personalized reading experience
 
+=======
+# Book-Library
+# 📚 Book Notes - Personal Reading Library Tracker
+
+A beautiful, modern web application for tracking your reading journey, managing book collections, and discovering new stories. Built with Node.js, Express, PostgreSQL, and a stunning responsive frontend.
+
+![Book Notes App](https://img.shields.io/badge/Node.js-14.0+-green) ![Express](https://img.shields.io/badge/Express-4.18+-blue) ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-12+-purple) ![EJS](https://img.shields.io/badge/EJS-3.0+-orange)
+
+## ✨ Features
+
+>>>>>>> 62a4335c27c05b68a2b7bff6fbe78bd977a77e0b
 ### 🎨 **Beautiful Modern UI/UX**
 - **Glassmorphism Design**: Semi-transparent cards with backdrop blur effects
 - **Responsive Layout**: Optimized for all devices (desktop, tablet, mobile)
@@ -26,7 +38,10 @@ A beautiful, modern web application for tracking your reading journey, managing 
 - **Delete Books**: Remove books with confirmation dialog
 - **Book Covers**: Automatic cover fetching from Open Library API
 - **Rating System**: Interactive 5-star rating with visual feedback
+<<<<<<< HEAD
 - **User Attribution**: See which user rated each book
+=======
+>>>>>>> 62a4335c27c05b68a2b7bff6fbe78bd977a77e0b
 
 ### 🔍 **Smart Cover Integration**
 - **Open Library API**: Automatically fetches book covers using ISBN or title
@@ -39,7 +54,10 @@ A beautiful, modern web application for tracking your reading journey, managing 
 - **Average Rating**: See your overall reading satisfaction
 - **Favorites Count**: Books rated 4+ stars
 - **Visual Stats**: Beautiful stat cards with hover effects
+<<<<<<< HEAD
 - **Multi-User Stats**: View ratings from all users
+=======
+>>>>>>> 62a4335c27c05b68a2b7bff6fbe78bd977a77e0b
 
 ### 📱 **Responsive Design**
 - **Mobile-First**: Optimized for all screen sizes
@@ -65,8 +83,12 @@ A beautiful, modern web application for tracking your reading journey, managing 
 
 ### **APIs & Services**
 - **Open Library API**: Book cover and metadata
+<<<<<<< HEAD
 - **Google OAuth**: User authentication
 - **PostgreSQL Database**: Data persistence with user management
+=======
+- **PostgreSQL Database**: Data persistence
+>>>>>>> 62a4335c27c05b68a2b7bff6fbe78bd977a77e0b
 
 ## 📋 Prerequisites
 
@@ -75,7 +97,10 @@ Before running this application, make sure you have:
 - **Node.js** (v14.0 or higher)
 - **PostgreSQL** (v12 or higher)
 - **npm** or **yarn** package manager
+<<<<<<< HEAD
 - **Google OAuth Credentials** (for Google sign-in)
+=======
+>>>>>>> 62a4335c27c05b68a2b7bff6fbe78bd977a77e0b
 
 ## 🛠️ Installation & Setup
 
@@ -91,6 +116,7 @@ npm install
 ```
 
 ### 3. **Database Setup**
+<<<<<<< HEAD
 Create a PostgreSQL database named `Books` and run the setup script:
 
 ```bash
@@ -119,6 +145,24 @@ CREATE TABLE users (
 );
 
 -- Create books table with user support
+=======
+Create a PostgreSQL database named `Books` and update the connection details in `index.js`:
+
+```javascript
+const db = new pg.Client({
+    user: "postgres",
+    host: "localhost",
+    database: "Books",
+    password: "your_password",
+    port: 5432
+});
+```
+
+### 4. **Create Database Table**
+Run this SQL query in your PostgreSQL database:
+
+```sql
+>>>>>>> 62a4335c27c05b68a2b7bff6fbe78bd977a77e0b
 CREATE TABLE books (
     id SERIAL PRIMARY KEY,
     title VARCHAR(255) NOT NULL,
@@ -128,6 +172,7 @@ CREATE TABLE books (
     notes TEXT,
     date_read DATE,
     cover_url TEXT,
+<<<<<<< HEAD
     user_id INTEGER REFERENCES users(id),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
@@ -141,6 +186,14 @@ CREATE INDEX idx_users_username ON users(username);
 
 ### 4. **Environment Configuration**
 Create a `.env` file in the root directory:
+=======
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+```
+
+### 5. **Environment Configuration**
+Create a `.env` file in the root directory (optional):
+>>>>>>> 62a4335c27c05b68a2b7bff6fbe78bd977a77e0b
 
 ```env
 DB_USER=postgres
@@ -149,6 +202,7 @@ DB_NAME=Books
 DB_PASSWORD=your_password
 DB_PORT=5432
 PORT=3000
+<<<<<<< HEAD
 
 # Google OAuth (for backend implementation)
 GOOGLE_CLIENT_ID=your_google_client_id
@@ -167,6 +221,10 @@ JWT_SECRET=your_jwt_secret_key
 5. Set authorized redirect URIs to `http://localhost:3000/auth/google/callback`
 6. Copy Client ID and Client Secret to your `.env` file
 
+=======
+```
+
+>>>>>>> 62a4335c27c05b68a2b7bff6fbe78bd977a77e0b
 ### 6. **Start the Application**
 ```bash
 # Development mode with nodemon
@@ -192,15 +250,21 @@ book-notes/
 ├── views/
 │   ├── index.ejs           # Main library page
 │   ├── add.ejs             # Add new book form
+<<<<<<< HEAD
 │   ├── edit.ejs            # Edit book form
 │   ├── login.ejs           # User login page
 │   └── register.ejs        # User registration page
 ├── index.js                # Main server file
 ├── database_setup.sql      # Database setup script
+=======
+│   └── edit.ejs            # Edit book form
+├── index.js                # Main server file
+>>>>>>> 62a4335c27c05b68a2b7bff6fbe78bd977a77e0b
 ├── package.json            # Project dependencies
 └── README.md               # This file
 ```
 
+<<<<<<< HEAD
 ## 🔐 Authentication Features
 
 ### **User Registration**
@@ -231,6 +295,10 @@ Each user can:
 - **View All Ratings**: See how other users rated books
 - **Personal Library**: Manage their own collection
 
+=======
+## 🎯 Key Features Explained
+
+>>>>>>> 62a4335c27c05b68a2b7bff6fbe78bd977a77e0b
 ### **Book Cover Management**
 The application automatically fetches book covers from Open Library API:
 - **ISBN Priority**: First tries to fetch cover using ISBN
@@ -243,7 +311,10 @@ Interactive 5-star rating with visual feedback:
 - **Visual Stars**: Hover effects and color changes
 - **Validation**: Ensures ratings are between 1-5
 - **Statistics**: Calculates average ratings and favorites
+<<<<<<< HEAD
 - **User Attribution**: Shows which user gave each rating
+=======
+>>>>>>> 62a4335c27c05b68a2b7bff6fbe78bd977a77e0b
 
 ### **Responsive Design**
 Mobile-first approach with:
@@ -255,17 +326,22 @@ Mobile-first approach with:
 
 | Method | Endpoint | Description |
 |--------|----------|-------------|
+<<<<<<< HEAD
 | `GET` | `/` | Display all books with user information |
 | `GET` | `/login` | Show login form |
 | `GET` | `/register` | Show registration form |
 | `POST` | `/login` | Handle user login |
 | `POST` | `/register` | Handle user registration |
+=======
+| `GET` | `/` | Display all books (main page) |
+>>>>>>> 62a4335c27c05b68a2b7bff6fbe78bd977a77e0b
 | `GET` | `/add` | Show add book form |
 | `POST` | `/add` | Create new book |
 | `GET` | `/edit/:id` | Show edit book form |
 | `POST` | `/edit/:id` | Update existing book |
 | `POST` | `/delete/:id` | Delete book |
 
+<<<<<<< HEAD
 ## 🎨 Customization
 
 ### **Changing Colors**
@@ -344,15 +420,21 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 ## 📝 License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+=======
+>>>>>>> 62a4335c27c05b68a2b7bff6fbe78bd977a77e0b
 
 ## 🙏 Acknowledgments
 
 - **Open Library**: For providing book cover API
+<<<<<<< HEAD
 - **Google**: For OAuth 2.0 authentication
+=======
+>>>>>>> 62a4335c27c05b68a2b7bff6fbe78bd977a77e0b
 - **Font Awesome**: For the beautiful icons
 - **Google Fonts**: For the Inter font family
 - **Express.js Team**: For the excellent web framework
 
+<<<<<<< HEAD
 ## 📞 Support
 
 If you encounter any issues or have questions:
@@ -368,10 +450,16 @@ If you encounter any issues or have questions:
 - [ ] **Password Recovery**: Forgot password functionality
 - [ ] **User Profiles**: Enhanced user profile pages
 - [ ] **Social Features**: Follow other users and share reading lists
+=======
+
+## 🔮 Future Enhancements
+
+>>>>>>> 62a4335c27c05b68a2b7bff6fbe78bd977a77e0b
 - [ ] **Search & Filter**: Advanced book search and filtering
 - [ ] **Categories**: Organize books by genre, author, or reading status
 - [ ] **Reading Progress**: Track current reading progress
 - [ ] **Export/Import**: Backup and restore functionality
+<<<<<<< HEAD
 - [ ] **Mobile App**: React Native or PWA version
 - [ ] **Dark Mode**: Toggle between light and dark themes
 - [ ] **Analytics**: Reading statistics and insights
@@ -398,3 +486,9 @@ The current database needs to be updated to support users:
 **Happy Reading! 📚✨**
 
 Built with ❤️ using Node.js, Express, PostgreSQL, and Google OAuth.
+=======
+- [ ] **Social Features**: Share reading lists and reviews
+- [ ] **Mobile App**: React Native or PWA version
+- [ ] **Dark Mode**: Toggle between light and dark themes
+- [ ] **Analytics**: Reading statistics and insights
+>>>>>>> 62a4335c27c05b68a2b7bff6fbe78bd977a77e0b
