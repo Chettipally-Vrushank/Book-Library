@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= user.first_name %>'s Books - Book Notes</title>
+  <link rel="stylesheet" href="/styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+  <div class="container">
+    <!-- Header Section -->
+    <header class="header">
+      <div class="header-content">
+        <h1><i class="fas fa-user-circle"></i> <%= user.first_name %>'s Book Collection</h1>
+        <p>Discover the reading journey of @<%= user.username %></p>
+      </div>
+      
+      <div class="header-actions">
+        <a href="/" class="add-btn">
+          <i class="fas fa-home"></i> Back to Community
+        </a>
+        
+        <div class="auth-buttons">
+          <% if (currentUser) { %>
+            <span class="user-welcome">Welcome, <%= currentUser.username || currentUser.first_name || 'User' %>!</span>
+            <a href="/dashboard" class="auth-btn">
+              <i class="fas fa-tachometer-alt"></i> My Dashboard
+            </a>
+            <a href="/logout" class="auth-btn logout-btn">
+              <i class="fas fa-sign-out-alt"></i> Logout
+            </a>
+          <% } else { %>
+            <a href="/login" class="auth-btn login-btn">
+              <i class="fas fa-sign-in-alt"></i> Login
+            </a>
+            <a href="/register" class="auth-btn register-btn">
+              <i class="fas fa-user-plus"></i> Register
+            </a>
+          <% } %>
+        </div>
+      </div>
+    </header>
+
+    <!-- User Profile Section -->
+    <section class="user-profile-section">
+      <div class="user-profile-card">
+        <div class="user-avatar-large">
+          <i class="fas fa-user-circle"></i>
+        </div>
+        <div class="user-profile-info">
+          <h2 class="user-full-name"><%= user.first_name %> <%= user.last_name %></h2>
+          <p class="user-username">@<%= user.username %></p>
+          <div class="user-stats-overview">
+            <div class="stat-item">
+              <i class="fas fa-book"></i>
+              <span class="stat-number"><%= books.length %></span>
+              <span class="stat-label">Books</span>
+            </div>
+            <div class="stat-item">
+              <i class="fas fa-star"></i>
+              <span class="stat-number"><%= books.length > 0 ? (books.reduce((sum, book) => sum + (book.rating || 0), 0) / books.length).toFixed(1) : '0.0' %></span>
+              <span class="stat-label">Avg Rating</span>
+            </div>
+            <div class="stat-item">
+              <i class="fas fa-heart"></i>
+              <span class="stat-number"><%= books.filter(book => book.rating >= 4).length %></span>
+              <span class="stat-label">Favorites</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Books Section -->
+    <main class="main-content">
+      <% if (books.length === 0) { %>
+        <section class="empty-state">
+          <div class="empty-icon">
+            <i class="fas fa-books"></i>
+          </div>
+          <h2>No books yet</h2>
+          <p><%= user.first_name %> hasn't added any books to their collection yet.</p>
+          <a href="/" class="add-btn">
+            <i class="fas fa-arrow-left"></i> Back to Community
+          </a>
+        </section>
+      <% } else { %>
+        
+        <!-- Books Grid Section -->
+        <section class="books-section">
+          <h2 class="section-title"><%= user.first_name %>'s Books (<%= books.length %> total)</h2>
+          <div class="books-grid-enhanced">
+            <% books.forEach(book => { %>
+              <article class="book-card-enhanced" data-isbn="<%= book.isbn %>" data-title="<%= book.title %>">
+                <!-- Book Cover -->
+                <div class="book-cover-enhanced">
+                  <a href="<%= book.amazon_url %>" target="_blank" rel="noopener noreferrer">
+                    <img 
+                      src="<%= book.cover_url %>" 
+                      alt="<%= book.title %> Cover"
+                      onerror="this.src='/default-cover.svg'"
+                      class="cover-image-enhanced">
+                  </a>
+                </div>
+                
+                <!-- Book Information -->
+                <div class="book-info-enhanced">
+                  <div class="book-rating-enhanced">
+                    <span class="rating-stars-enhanced">
+                      <% for(let i = 1; i <= 5; i++) { %>
+                        <i class="fas fa-star <%= i <= book.rating ? 'filled' : 'empty' %>"></i>
+                      <% } %>
+                    </span>
+                    <span class="rating-number-enhanced"><%= book.rating %>/5</span>
+                  </div>
+                  <h3 class="book-title-enhanced">
+                    <a href="<%= book.amazon_url %>" target="_blank" rel="noopener noreferrer">
+                      <%= book.title %>
+                    </a>
+                  </h3>
+                  
+                  <div class="book-details-grid">
+                    <div class="book-detail-item">
+                      <i class="fas fa-user detail-icon"></i>
+                      <span class="detail-label">Author:</span>
+                      <span class="detail-value"><%= book.author || 'Unknown Author' %></span>
+                    </div>
+                    
+                    <% if (book.isbn) { %>
+                      <div class="book-detail-item">
+                        <i class="fas fa-barcode detail-icon"></i>
+                        <span class="detail-label">ISBN:</span>
+                        <span class="detail-value"><%= book.isbn %></span>
+                      </div>
+                    <% } %>
+                    
+                    <% if (book.date_read) { %>
+                      <div class="book-detail-item">
+                        <i class="fas fa-calendar detail-icon"></i>
+                        <span class="detail-label">Read on:</span>
+                        <span class="detail-value"><%= new Date(book.date_read).toLocaleDateString('en-US', { 
+                          year: 'numeric', 
+                          month: 'long', 
+                          day: 'numeric' 
+                        }) %></span>
+                      </div>
+                    <% } %>
+                    
+                    <div class="book-detail-item">
+                      <i class="fas fa-star detail-icon"></i>
+                      <span class="detail-label">Rating:</span>
+                      <span class="detail-value rating-display"><%= book.rating %> out of 5</span>
+                    </div>
+                  </div>
+                  
+                  <% if (book.notes && book.notes.trim()) { %>
+                    <div class="book-notes-enhanced">
+                      <h4 class="notes-title">
+                        <i class="fas fa-sticky-note"></i> 
+                        Reading Notes
+                      </h4>
+                      <p class="notes-text-enhanced"><%= book.notes %></p>
+                    </div>
+                  <% } %>
+                  
+                  <!-- Book Actions (only for book owner) -->
+                  <% if (currentUser && currentUser.id === user.id) { %>
+                    <div class="book-actions-enhanced">
+                      <a href="/edit/<%= book.id %>" class="action-btn edit-btn-enhanced">
+                        <i class="fas fa-edit"></i> Edit Book
+                      </a>
+                      <form action="/delete/<%= book.id %>" method="post" class="delete-form" 
+                            onsubmit="return confirm('Are you sure you want to delete this book?');">
+                        <button type="submit" class="action-btn delete-btn-enhanced">
+                          <i class="fas fa-trash"></i> Delete
+                        </button>
+                      </form>
+                    </div>
+                  <% } %>
+                </div>
+              </article>
+            <% }) %>
+          </div>
+        </section>
+        
+      <% } %>
+    </main>
+    
+  </div>
+
+  <!-- JavaScript Section -->
+  <script>
+    // Handle cover image errors and fetch from Open Library
+    document.querySelectorAll(".cover-image-enhanced").forEach(async (img) => {
+      img.addEventListener("error", async function() {
+        const bookCard = this.closest('.book-card-enhanced');
+        const isbn = bookCard.dataset.isbn;
+        const title = bookCard.dataset.title;
+        if (isbn || title) {
+          try {
+            let apiUrl = isbn && isbn.trim() !== ""
+              ? `https://openlibrary.org/search.json?isbn=${isbn}`
+              : `https://openlibrary.org/search.json?title=${encodeURIComponent(title)}`;
+            const response = await fetch(apiUrl);
+            const data = await response.json();
+            if (data.docs && data.docs.length > 0 && data.docs[0].cover_i) {
+              this.src = `https://covers.openlibrary.org/b/id/${data.docs[0].cover_i}-M.jpg`;
+              this.classList.remove('error');
+            } else {
+              this.src = '/default-cover.svg'; // Fallback to SVG if no cover found
+            }
+          } catch (error) {
+            console.error("Failed to fetch cover:", error);
+            this.src = '/default-cover.svg'; // Fallback to SVG on fetch error
+          }
+        } else {
+          this.src = '/default-cover.svg'; // Fallback to SVG if no ISBN/title
+        }
+      });
+    });
+  </script>
+</body>
+</html>
